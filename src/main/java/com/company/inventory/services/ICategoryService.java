@@ -9,4 +9,6 @@ public interface ICategoryService {
 	
 	public ResponseEntity<CategoryResponseRest> search();
 
+	public ResponseEntity<CategoryResponseRest> searchById(Long id);
+
 }

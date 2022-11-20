@@ -11,8 +11,5 @@ public class CategoryResponse {
 	
 	private List<Category> category;
 
-	public void setCategory(List<Category> category2) {
-		
-	}
 
 }

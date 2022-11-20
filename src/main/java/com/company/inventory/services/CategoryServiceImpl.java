@@ -78,6 +78,11 @@ public class CategoryServiceImpl implements ICategoryService{
 		return new ResponseEntity<CategoryResponseRest>(response, HttpStatus.OK);
 	}
 
+	/**
+	 * Metodo POST para implementar y agregar valores a la base de datos
+	 * el mismo crea un metodo a category saved y de ahi si no esta vacio
+	 * busca agregarlo a traves de un get and set
+	 */
 	@Override
 	@Transactional
 	public ResponseEntity<CategoryResponseRest> save(Category category) {
@@ -156,6 +161,10 @@ public class CategoryServiceImpl implements ICategoryService{
 		return new ResponseEntity<CategoryResponseRest>(response, HttpStatus.OK);
 	}
 
+	/**
+	 * Metodo que borra algun dato de la base de datos
+	 * a traves de un commando HTTP
+	 */
 	@Override
 	@Transactional
 	public ResponseEntity<CategoryResponseRest> deleteById(Long id) {

@@ -9,10 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-//To not use setters and getter, import data from lombok
+
 @Data
 @Entity
-@Table(name = "category")
+@Table(name="category")
 public class Category implements Serializable{
 
 	/**
@@ -20,16 +20,10 @@ public class Category implements Serializable{
 	 */
 	private static final long serialVersionUID = -4310027227752446841L;
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String description;         
-	
-	// Library lombok used and a category table was created over the
-	//SQL database
-	
- 
-	
+	private String description;
+
 }

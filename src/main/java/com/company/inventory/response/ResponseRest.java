@@ -3,9 +3,7 @@ package com.company.inventory.response;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//Esta clase se encarga de setear toda la metadata
 public class ResponseRest {
-
 	
 	private ArrayList<HashMap<String, String>> metadata = new ArrayList<>();
 
@@ -25,5 +23,5 @@ public class ResponseRest {
 	}
 	
 	
-	
+
 }

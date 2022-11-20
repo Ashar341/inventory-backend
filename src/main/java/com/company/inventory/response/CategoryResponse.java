@@ -11,5 +11,4 @@ public class CategoryResponse {
 	
 	private List<Category> category;
 
-
 }

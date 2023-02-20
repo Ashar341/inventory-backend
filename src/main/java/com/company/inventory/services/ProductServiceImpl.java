@@ -111,4 +111,68 @@ public class ProductServiceImpl implements IProductService {
 		
 		return 	new ResponseEntity<ProductResponseRest>(response, HttpStatus.OK);
 	}
+
+
+
+	@Override
+	@Transactional (readOnly = true)
+	public ResponseEntity<ProductResponseRest> searchByName(String name) {
+		//Se copia el mismo codigo anterior
+		ProductResponseRest response = new ProductResponseRest();
+		List<Product> list = new ArrayList<>();
+		List<Product> listAux = new ArrayList<>();		
+		try {
+			// Se busca producto por name similar
+			listAux = productDao.findByNameContainingIgnoreCase(name);
+					
+			//Si encuentra el producto, obeneter la imagen en b64 y descomprimir
+			if (listAux.size() > 0) {
+				//Para ver si encuentra un nombre similar y pasarlo a la busqueda normal
+				listAux.stream().forEach((p) ->{
+					byte [] imageDescompressed = Util.decompressZLib(p.getPicture());
+					p.setPicture(imageDescompressed);
+					list.add(p);
+				});
+				
+				//La respuesta sera con la lista normal
+				response.getProduct().setProducts(list);
+				response.setMetadata("Respuesta ok", "00", "Productos encontrados");
+						
+			} else {
+				response.setMetadata("Respuesta nok", "-1", "Productos no encontrados ");
+				return new ResponseEntity<ProductResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+					
+		} catch (Exception e) {
+			e.getStackTrace();
+			response.setMetadata("Respuesta nok", "400", "Error al buscar producto por nombre");
+			return new ResponseEntity<ProductResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+				
+		return 	new ResponseEntity<ProductResponseRest>(response, HttpStatus.OK);
+	}
+
+
+
+	@Override
+	@Transactional
+	public ResponseEntity<ProductResponseRest> deleteById(Long id) {
+		//Se copia el mismo codigo anterior y se adapta para eliminar
+				ProductResponseRest response = new ProductResponseRest();
+				
+				try {
+					// eliminar producto por ID
+					productDao.deleteById(id);
+					response.setMetadata("Respuesta ok", "00", "Producto eliminado");
+					
+					//Si encuentra el producto, obeneter la imagen en b64 y descomprimir
+					
+				} catch (Exception e) {
+					e.getStackTrace();
+					response.setMetadata("Respuesta nok", "500", "Error al eliminar producto");
+					return new ResponseEntity<ProductResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				
+				return 	new ResponseEntity<ProductResponseRest>(response, HttpStatus.OK);
+	}
 }
